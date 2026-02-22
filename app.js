@@ -1,5 +1,5 @@
 /* ========= API CONFIG ========= */
-const API_BASE = "https://eventful-backend-rtj7.onrender.com/";
+const API_BASE = "https://eventful-backend-rtj7.onrender.com";
 const ENDPOINTS = {
   login: `${API_BASE}/auth/login`,
   signup: `${API_BASE}/auth/register`,    // register endpoint you gave
@@ -131,7 +131,7 @@ function initLogin(){
       if(!token) throw new Error("No token returned");
       setAuth(token,user);
       toast("Welcome back!");
-      location.href="index.html";
+      location.href="home.html";
     }catch(err){ toast(err.message||"Login failed"); }
   });
 }
@@ -166,7 +166,7 @@ function initSignup(){
       if(!token) throw new Error("No token returned");
       setAuth(token,user);
       toast("Welcome 👋");
-      location.href="index.html";
+      location.href="home.html";
     }catch(err){ toast(err.message||"Sign up failed"); }
   });
 }
@@ -391,15 +391,15 @@ async function initPaymentCallback(){
   const params=new URLSearchParams(location.search);
   const reference=params.get("reference");
   const pending=JSON.parse(sessionStorage.getItem("pendingPayment")||"null");
-  if(!reference || !pending){ toast("Missing reference"); setTimeout(()=>location.href="index.html",1200); return; }
+  if(!reference || !pending){ toast("Missing reference"); setTimeout(()=>location.href="home.html",1200); return; }
 
   try{
     const v=await fetch(ENDPOINTS.verifyPayment,{ method:"POST", headers:{ "Content-Type":"application/json", ...authHeaders() }, body:JSON.stringify({ reference }) });
     const vt=await v.text(); const j=safeJson(vt);
-    if(!v.ok || (j.status||"").toLowerCase()!=="success"){ toast(j?.message||"Payment not successful"); setTimeout(()=>location.href="index.html",1200); return; }
+    if(!v.ok || (j.status||"").toLowerCase()!=="success"){ toast(j?.message||"Payment not successful"); setTimeout(()=>location.href="home.html",1200); return; }
 
     const tr=await fetch(ENDPOINTS.ticket(pending.eventId),{ method:"POST", headers:{ ...authHeaders() } });
-    const tt=await tr.text(); const tj=safeJson(tt); if(!tr.ok){ toast("Ticket generation failed"); setTimeout(()=>location.href="index.html",1200); return; }
+    const tt=await tr.text(); const tj=safeJson(tt); if(!tr.ok){ toast("Ticket generation failed"); setTimeout(()=>location.href="home.html",1200); return; }
 
     let shareUrl=""; try{ const s=await fetch(ENDPOINTS.share(pending.eventId),{ headers:{ ...authHeaders() } }); if(s.ok){ const sd=await s.json(); shareUrl=sd.shareUrl||""; } }catch{}
     const receipt={ eventId:pending.eventId,title:pending.title,date:pending.date,description:pending.description, amount:j.requested_amount ?? j.amount ?? pending.amount, status:j.status, paidAt:j.paid_at||j.paidAt, channel:j.channel, customerEmail:j.customer?.email||"", reference, qrBase64:tj.qrCode||"", qrData:tj.qrData||"", img:pending.img, shareUrl };
@@ -412,13 +412,13 @@ async function initPaymentCallback(){
     await trySendEmail(receipt);
 
     location.href="receipt.html";
-  }catch{ toast("Payment verification failed"); setTimeout(()=>location.href="index.html",1500); }
+  }catch{ toast("Payment verification failed"); setTimeout(()=>location.href="home.html",1500); }
 }
 
 /* ========= RECEIPT ========= */
 async function initReceipt(){
   const data=JSON.parse(sessionStorage.getItem("receiptData")||"null");
-  if(!data){ location.href="index.html"; return; }
+  if(!data){ location.href="home.html"; return; }
 
   $("#receiptImg").src = data.img || CARD_IMAGES[0];
   $("#receiptTitle").textContent = data.title || "Event";
@@ -609,7 +609,7 @@ function initCreateEvent(){
     form.dataset.bound = "true";
   console.log("initCreateEvent called");
   const { token, user } = getAuth(); if(!token){ location.href="login.html"; return; }
-  if(!user || user.role!=="CREATOR"){ toast("Create Event is for creators"); location.href="index.html"; return; }
+  if(!user || user.role!=="CREATOR"){ toast("Create Event is for creators"); location.href="home.html"; return; }
 
   $("#createForm")?.addEventListener("submit", async (e)=>{
     e.preventDefault();
@@ -620,7 +620,7 @@ function initCreateEvent(){
       const txt=await res.text(); const data=safeJson(txt);
       if(!res.ok) throw new Error(data?.message||"Create failed");
       toast("Event created successfully");
-      setTimeout(()=> location.href="index.html", 600);
+      setTimeout(()=> location.href="home.html", 600);
     }catch(err){ toast(err.message||"Create failed"); }
   });
 }

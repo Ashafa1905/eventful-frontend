@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eventful — Home</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="home">
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav-inner container">
+      <a class="brand-link nav-link brand" href="index.html"><span class="brand-gradient">Eventful</span></a>
+      <nav class="nav-links">
+        <a class="nav-link active" href="index.html"><span>Events</span></a>
+        <a class="nav-link" href="my-tickets.html"><span>My Tickets</span></a>
+        <a class="nav-link" href="analytics.html"><span>Analytics</span></a>
+        <a class="nav-link only-creator" href="create-event.html"><span>Create Event</span></a>
+      </nav>
+      <div class="nav-cta">
+        <button class="btn btn-secondary" id="logoutBtn" title="Log out">Log Out</button>
+        <a class="btn btn-ghost" id="loginBtn" href="login.html">Log In</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- SEARCH + FILTERS -->
+  <section class="filters container mt-20">
+    <div class="filters-row pill">
+      <div class="input-wrap icon-left">
+        <span class="icon">🔍</span>
+        <input id="searchInput" type="text" placeholder="Search events..." />
+      </div>
+
+      <div class="dropdown">
+        <button type="button" class="dropdown-btn" id="locationBtn">Anywhere</button>
+        <div class="dropdown-menu" id="locationMenu">
+          <button class="menu-item" data-location="">Anywhere</button>
+          <button class="menu-item" data-location="lagos">Lagos</button>
+          <button class="menu-item" data-location="abuja">Abuja</button>
+          <button class="menu-item" data-location="port harcourt">Port Harcourt</button>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button type="button" class="dropdown-btn" id="dateBtn">Any date</button>
+        <div class="dropdown-menu date-menu" id="dateMenu">
+          <div class="date-row">
+            <label>Start date</label>
+            <input type="date" id="startDate" />
+          </div>
+          <div class="date-row">
+            <label>End date</label>
+            <input type="date" id="endDate" />
+          </div>
+          <div class="date-actions">
+            <button class="btn btn-ghost" id="clearDate" type="button">Clear</button>
+            <button class="btn btn-primary" id="applyDate" type="button">Apply</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button type="button" class="dropdown-btn" id="priceBtn">Price range</button>
+        <div class="dropdown-menu" id="priceMenu">
+          <button class="menu-item" data-price="any">Any price</button>
+          <button class="menu-item" data-price="free">Free</button>
+          <button class="menu-item" data-price="0-5000">₦0–₦5k</button>
+          <button class="menu-item" data-price="5000-20000">₦5k–₦20k</button>
+          <button class="menu-item" data-price="20000+">₦20k+</button>
+          <div class="menu-note">If an event has no price, it won’t be filtered out unless “Free only” is on.</div>
+        </div>
+      </div>
+
+      <label class="toggle">
+        <input type="checkbox" id="freeOnlyToggle" />
+        <span>Free only</span>
+      </label>
+
+      <div class="dropdown">
+        <button class="dropdown-btn" id="sortBtn">Sort by</button>
+        <div class="dropdown-menu" id="sortMenu">
+          <button class="menu-item" data-sort="name-asc">Alphabetical (A–Z)</button>
+          <button class="menu-item" data-sort="name-desc">Alphabetical (Z–A)</button>
+          <button class="menu-item" data-sort="date-asc">Date (ascending)</button>
+          <button class="menu-item" data-sort="date-desc">Date (descending)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="chip-row mt-16">
+      <button class="chip chip-active" data-cat="concerts">Concerts</button>
+      <button class="chip" data-cat="theater">Theater</button>
+      <button class="chip" data-cat="sports">Sports</button>
+      <button class="chip" data-cat="arts">Arts</button>
+      <button class="chip" data-cat="community">Community</button>
+      <button class="chip" data-cat="food-drink">Food &amp; Drink</button>
+      <button class="chip" data-cat="food">Food</button>
+      <button class="chip map-chip" id="mapChip">Map</button>
+    </div>
+  </section>
+
+  <!-- GRID -->
+  <main class="container mt-16">
+    <div id="grid" class="card-grid"></div>
+    <div id="emptyState" class="empty-state hidden">No events match your filters.</div>
+    <div id="pagination" class="pagination mt-16"></div>
+  </main>
+
+  <!-- EVENT MODAL -->
+  <div class="modal hidden" id="eventModal" aria-modal="true" role="dialog">
+    <div class="modal-dialog">
+      <button class="modal-close" id="closeEventModal" aria-label="Close">×</button>
+      <div class="modal-body">
+        <div class="modal-media">
+          <img id="modalImg" alt="Event" />
+        </div>
+        <div class="modal-info">
+          <h2 id="modalTitle"></h2>
+          <p class="muted" id="modalDesc"></p>
+          <div class="kv"><span class="k">Date</span><span class="v" id="modalDate"></span></div>
+          <div class="kv"><span class="k">Event ID</span><span class="v mono" id="modalId"></span></div>
+          <div class="kv">
+            <span class="k">Amount (₦)</span>
+            <span class="v"><input type="number" id="modalAmount" min="0" step="100" value="5000" class="inline-input" /></span>
+          </div>
+
+          <div class="modal-actions">
+            <button class="btn btn-secondary" id="shareBtn">Share</button>
+            <button class="btn btn-primary" id="confirmBuyBtn">Buy Ticket</button>
+            <button class="btn btn-ghost" id="cancelModalBtn">Cancel</button>
+          </div>
+
+          <div class="share-area hidden" id="shareArea">
+            <h3>Share this event</h3>
+            <div class="share-grid">
+              <div id="shareQr" class="qr-box">
+                <img id="shareQrImg" alt="Share QR" style="width:180px;height:180px;object-fit:contain;background:#fff;border-radius:8px;border:1px solid #2e2e3e"/>
+              </div>
+              <div class="share-links">
+                <a id="shareWhatsApp" target="_blank" rel="noopener">WhatsApp</a>
+                <a id="shareFacebook" target="_blank" rel="noopener">Facebook</a>
+                <a id="shareX" target="_blank" rel="noopener">X (Twitter)</a>
+                <a id="shareTelegram" target="_blank" rel="noopener">Telegram</a>
+                <button id="shareNative" class="btn btn-ghost" type="button">Share…</button>
+                <button id="copyLink" class="btn btn-ghost" type="button">Copy link</button>
+                <button id="downloadQr" class="btn btn-secondary" type="button">Download QR (PNG)</button>
+                <button id="downloadSharePdf" class="btn btn-secondary" type="button">Download as PDF</button>
+              </div>
+              <div class="share-preview" id="sharePreview"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WAIT FOR PAYMENT -->
+  <div class="modal hidden" id="waitModal" aria-modal="true" role="dialog">
+    <div class="modal-dialog small">
+      <button class="modal-close" id="closeWait" aria-label="Close">×</button>
+      <div class="modal-body">
+        <h3>Waiting for payment…</h3>
+        <p class="muted">Complete the payment in the other tab. Then click Verify.</p>
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="verifyNowBtn">Verify Now</button>
+          <button class="btn btn-ghost" id="cancelWaitBtn">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
