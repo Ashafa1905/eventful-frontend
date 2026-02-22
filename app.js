@@ -1,5 +1,5 @@
 /* ========= API CONFIG ========= */
-const API_BASE = "http://localhost:3000";
+const API_BASE = "https://eventful-backend-rtj7.onrender.com/";
 const ENDPOINTS = {
   login: `${API_BASE}/auth/login`,
   signup: `${API_BASE}/auth/register`,    // register endpoint you gave
