@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Eventful — Analytics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="analytics">
+  <header class="nav">
+    <div class="nav-inner container">
+      <a class="brand-link nav-link brand" href="index.html"><span class="brand-gradient">Eventful</span></a>
+      <nav class="nav-links">
+        <a class="nav-link" href="index.html">Events</a>
+        <a class="nav-link" href="my-tickets.html">My Tickets</a>
+        <a class="nav-link active" href="analytics.html">Analytics</a>
+        <a class="nav-link only-creator" href="create-event.html">Create Event</a>
+      </nav>
+      <div class="nav-cta">
+        <button class="btn btn-secondary" id="logoutBtn" title="Log out">Log Out</button>
+        <a id="loginBtn" class="btn btn-primary" href="login.html">Log In</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="analytics-hero">
+    <div class="container">
+      <h1>Creator Dashboard</h1>
+    </div>
+  </section>
+
+  <main class="container analytics-grid">
+    <div class="metric">
+      <div class="metric-icon">👥</div>
+      <div>
+        <div class="metric-value" id="mAttendees">0</div>
+        <div class="metric-label">Total Attendees</div>
+      </div>
+    </div>
+    <div class="metric">
+      <div class="metric-icon">🎟️</div>
+      <div>
+        <div class="metric-value" id="mTickets">0</div>
+        <div class="metric-label">Tickets Sold</div>
+      </div>
+    </div>
+    <div class="metric">
+      <div class="metric-icon">🔲</div>
+      <div>
+        <div class="metric-value" id="mScans">0</div>
+        <div class="metric-label">QR Codes Scanned</div>
+      </div>
+    </div>
+    <div class="metric">
+      <div class="metric-icon">💰</div>
+      <div>
+        <div class="metric-value" id="mRevenue">₦0</div>
+        <div class="metric-label">Total Revenue</div>
+      </div>
+    </div>
+
+    <div class="panel span-2">
+      <div class="panel-title">Revenue Over Time</div>
+      <canvas id="revenueLine" height="160"></canvas>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Tickets Sold By Channel</div>
+      <canvas id="channelDonut" height="180"></canvas>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Revenue By Day</div>
+      <canvas id="revenueBars" height="180"></canvas>
+    </div>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

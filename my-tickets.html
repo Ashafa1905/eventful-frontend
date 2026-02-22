@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Eventful — My Tickets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="tickets">
+  <header class="nav">
+    <div class="nav-inner container">
+      <a class="brand-link nav-link brand" href="index.html"><span class="brand-gradient">Eventful</span></a>
+      <nav class="nav-links">
+        <a class="nav-link" href="index.html">Events</a>
+        <a class="nav-link active" href="my-tickets.html">My Tickets</a>
+        <a class="nav-link" href="analytics.html">Analytics</a>
+        <a class="nav-link only-creator" href="create-event.html">Create Event</a>
+      </nav>
+      <div class="nav-cta">
+        <button class="btn btn-secondary" id="logoutBtn" title="Log out">Log Out</button>
+        <a class="btn btn-ghost" id="loginBtn" href="login.html">Log In</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mt-20">
+    <h1>My Tickets</h1>
+    <div class="tabs">
+      <button class="tab tab-active" data-tab="upcoming">Upcoming</button>
+      <button class="tab" data-tab="past">Past</button>
+    </div>
+
+    <div id="ticketsList" class="ticket-list"></div>
+    <div id="ticketsEmpty" class="empty-state hidden">No tickets found.</div>
+  </main>
+
+  <!-- QR Modal -->
+  <div class="modal hidden" id="qrModal">
+    <div class="modal-dialog small">
+      <button class="modal-close" id="closeQr">×</button>
+      <div class="modal-body">
+        <h3>Ticket QR</h3>
+        <div id="qrCanvas" class="qr-box">
+          <img id="ticketQrImg" alt="Ticket QR"
+            style="width:180px;height:180px;object-fit:contain;background:#fff;border-radius:8px;border:1px solid #2e2e3e">
+        </div>
+        <p class="muted" id="qrText"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAILS MODAL -->
+  <div class="modal hidden" id="ticketDetails">
+    <div class="modal-dialog">
+      <button class="modal-close" id="closeDetails">×</button>
+      <div class="modal-body">
+        <div class="modal-media"><img id="tdImg" alt="Event"></div>
+        <div class="modal-info">
+          <h2 id="tdTitle"></h2>
+          <p class="muted" id="tdDesc"></p>
+          <div class="kv"><span class="k">Date</span><span class="v" id="tdDate"></span></div>
+          <div class="kv"><span class="k">Event ID</span><span class="v mono" id="tdId"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eventful — Create Event</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="page-light" data-page="create-event">
+  <header class="nav">
+    <div class="nav-inner container">
+      <a class="brand-link nav-link brand" href="index.html"><span class="brand-gradient">Eventful</span></a>
+
+     <nav class="nav-links">
+        <a class="nav-link active" href="index.html"><span>Events</span></a>
+        <a class="nav-link" href="my-tickets.html"><span>My Tickets</span></a>
+        <a class="nav-link" href="analytics.html"><span>Analytics</span></a>
+        <a class="nav-link only-creator" href="create-event.html"><span>Create Event</span></a>
+      </nav>
+      <div class="nav-cta">
+        <button class="btn btn-secondary" id="logoutBtn" type="button">Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container create-wrap">
+    <section class="create-card">
+      <div class="create-head">
+        <h1 class="create-title">Create Event</h1>
+        <p class="create-sub">Fill in the details below to publish your event.</p>
+      </div>
+
+      <form id="createForm" class="create-form" novalidate>
+        <!-- Title -->
+        <div class="field">
+          <label class="label" for="ceTitle">Title</label>
+          <input id="title" name="title" class="input" type="text"
+                 placeholder="e.g. Laugh Out Lagos - Comedy Night" required />
+          <div class="hint" id="ceTitleHint"></div>
+        </div>
+
+        <!-- Description -->
+        <div class="field">
+          <label class="label" for="ceDescription">Description</label>
+          <textarea id="description" name="description" class="textarea"
+                    placeholder="Write a short but clear description of the event..."
+                    rows="5" required></textarea>
+          <div class="hint" id="ceDescHint"></div>
+        </div>
+
+        <!-- Event Image (UI only — not sent to API) -->
+        <div class="field">
+          <div class="label-row">
+            <label class="label">Event Image (optional)</label>
+          </div>
+
+          <div class="upload-actions">
+            <button class="btn btn-secondary btn-soft" type="button" id="ceUploadBtn">
+              <span class="icon">⬆</span> Upload File
+            </button>
+
+            <button class="btn btn-ghost btn-soft" type="button" id="cePasteUrlBtn">
+              <span class="icon">🔗</span> Paste URL
+            </button>
+
+            <input id="ceFileInput" type="file" accept="image/*" hidden />
+          </div>
+
+          <div class="dropzone" id="ceDropzone">
+            <div class="dz-icon">⬆</div>
+            <div class="dz-text">
+              Drag &amp; drop an image here, or <span class="dz-link">click to browse</span>
+            </div>
+            <div class="dz-meta">JPEG, PNG, GIF, WebP up to 5MB</div>
+          </div>
+
+          <div class="preview hidden" id="cePreviewWrap">
+            <img id="cePreviewImg" alt="Preview" />
+            <button class="btn btn-ghost btn-small" type="button" id="ceRemoveImg">Remove</button>
+          </div>
+
+          <div class="paste-row hidden" id="cePasteRow">
+            <input class="input" type="url" id="ceImgUrl" placeholder="Paste image URL (optional)" />
+            <button class="btn btn-secondary btn-soft" type="button" id="ceUseUrl">Use</button>
+          </div>
+        </div>
+
+        <!-- UI only row -->
+        <div class="grid-2">
+          <div class="field">
+            <label class="label" for="ceCategory">Category (optional)</label>
+            <select id="ceCategory" class="input">
+              <option value="Entertainment">Entertainment</option>
+              <option value="Concert">Concert</option>
+              <option value="Theater">Theater</option>
+              <option value="Sports">Sports</option>
+              <option value="Arts">Arts</option>
+              <option value="Community">Community</option>
+              <option value="Food & Drink">Food & Drink</option>
+              <option value="Food">Food</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="label" for="ceLocation">Location (optional)</label>
+            <input id="ceLocation" class="input" type="text" placeholder="e.g. Muson Centre, Onikan" />
+          </div>
+        </div>
+
+        <!-- REQUIRED date -->
+        <div class="grid-2">
+          <div class="field">
+            <label class="label" for="ceDate">Date &amp; Time</label>
+            <input id="date" name="date" class="input" type="datetime-local" required />
+            <div class="hint" id="ceDateHint"></div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="cePrice">Price (NGN) (optional)</label>
+            <input id="cePrice" class="input" type="number" min="0" step="100" placeholder="e.g. 15000" />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-ghost btn-wide" type="button" id="ceCancelBtn">Cancel</button>
+          <button class="btn btn-primary btn-wide" type="submit" id="ceCreateBtn">Create Event</button>
+        </div>
+
+        <div class="form-note" id="ceFormNote"></div>
+      </form>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof initCreateEvent === "function") {
+      initCreateEvent();
+    }
+  });
+</script>
+</body>

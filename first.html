@@ -1,0 +1,127 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Eventful • Your gateway to unforgettable experiences</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="first.css"/>
+</head>
+<body>
+  <div class="page-wrap">
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+      <div class="brand" aria-label="Eventful">
+        <a class="brand-link" href="index.html" aria-current="page">
+          <span class="brand-word">Eventful</span>
+          <span class="brand-underline" aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <ul class="nav-links" id="navLinks" role="menubar" aria-label="Primary navigation">
+        <li role="none"><a role="menuitem" href="home.html">Explore</a></li>
+        <li role="none"><a role="menuitem" href="#tickets">My Tickets</a></li>
+        <li role="none"><a role="menuitem" href="#analytics">Analytics</a></li>
+        <li role="none"><a role="menuitem" href="#create">Create Event</a></li>
+        <span class="nav-indicator" id="navIndicator" aria-hidden="true"></span>
+      </ul>
+
+      <div class="nav-actions">
+        <a class="btn-ghost" href="register.html" aria-label="Create an Eventful account">Sign up</a>
+      </div>
+      <div class="nav-actions">
+        <a class="btn-ghost" href="login.html" aria-label="Log in to Eventful">Log In</a>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-bg">
+        <img src="./images/Crowd.jpeg" alt="Crowd at a concert cheering under bright stage lights"/>
+        <div class="overlay"></div>
+      </div>
+      <div class="hero-content">
+        <h1>Your gateway to unforgettable experiences</h1>
+        <p>Discover and book tickets to the best events around you.</p>
+        <a class="btn btn-primary" href="home.html">Browse Events</a>
+      </div>
+    </header>
+
+    <!-- FEATURES -->
+    <section id="features" class="features-card" aria-labelledby="features-title">
+      <h2 class="features-title" id="features-title">Features</h2>
+      <div class="features-grid">
+        <a class="feature card" href="login.html" aria-label="Secure Authentication">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#6e00ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2l7 3v6c0 5-3.5 9-7 11-3.5-2-7-6-7-11V5l7-3z"></path>
+              <path d="M9 12l2 2 4-4"></path>
+            </svg>
+          </div>
+          <div class="feature-body">
+            <h3>Secure Authentication</h3>
+            <p>Sign in securely to manage your events and tickets.</p>
+          </div>
+        </a>
+
+        <a class="feature card" href="#qr" aria-label="QR Tickets (coming soon)">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#6e00ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+              <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+              <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+              <path d="M14 14h3v3M17 17h4M14 21v-4"></path>
+            </svg>
+          </div>
+          <div class="feature-body">
+            <h3>QR Tickets</h3>
+            <p>Get your tickets as QR codes for easy and quick entry.</p>
+          </div>
+        </a>
+
+        <a class="feature card" href="#share" aria-label="Social Sharing (coming soon)">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#6e00ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <path d="M8.6 13.5l6.8 3.9M15.4 6.6L8.6 10.5"></path>
+            </svg>
+          </div>
+          <div class="feature-body">
+            <h3>Social Sharing</h3>
+            <p>Share your favorite events with friends on social media.</p>
+          </div>
+        </a>
+
+        <a class="feature card" href="#reminders" aria-label="Event Reminders (coming soon)">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#6e00ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 01-3.46 0"></path>
+            </svg>
+          </div>
+          <div class="feature-body">
+            <h3>Event Reminders</h3>
+            <p>Receive timely notifications about your upcoming events.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section id="events" style="height:1px;"></section>
+    <section id="tickets" style="height:1px;"></section>
+    <section id="analytics" style="height:1px;"></section>
+    <section id="create" style="height:1px;"></section>
+
+    <footer class="footer">
+      <span>© <span id="year"></span> Eventful</span>
+    </footer>
+  </div>
+  <script src="first.js"></script>
+</body>
+</html>

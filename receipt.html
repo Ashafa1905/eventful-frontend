@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Eventful — Receipt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="receipt">
+  <main class="container receipt-wrap">
+    <div class="receipt" id="receiptCard">
+      <header class="receipt-header">
+        <div class="brand-gradient">Eventful</div>
+        <div class="receipt-badge">Payment Receipt</div>
+      </header>
+
+      <section class="receipt-top">
+        <div class="receipt-hero">
+          <img id="receiptImg" alt="Event" />
+          <div class="receipt-title">
+            <h1 id="receiptTitle"></h1>
+            <div class="muted" id="receiptDate"></div>
+            <div class="muted" id="receiptVenue"></div>
+          </div>
+        </div>
+        <div class="receipt-codes">
+          <img id="receiptQr" class="qr" alt="QR Code" />
+          <svg id="barcode" class="barcode"></svg>
+          <div class="mono small" id="barcodeText"></div>
+        </div>
+      </section>
+
+      <section class="receipt-table">
+        <table>
+          <tbody>
+            <tr><th>Event name</th><td id="rcEventName"></td></tr>
+            <tr><th>Date</th><td id="rcEventDate"></td></tr>
+            <tr><th>Reference</th><td id="rcRef"></td></tr>
+            <tr><th>Status</th><td id="rcStatus"></td></tr>
+            <tr><th>Paid at</th><td id="rcPaidAt"></td></tr>
+            <tr><th>Channel</th><td id="rcChannel"></td></tr>
+            <tr><th>Amount</th><td id="rcAmount"></td></tr>
+            <tr><th>Customer</th><td id="rcCustomer"></td></tr>
+            <tr><th>Event link</th><td id="rcLink"></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <footer class="receipt-footer">
+        <button class="btn btn-primary" id="printBtn">Print / Save PDF</button>
+        <button class="btn btn-ghost" id="emailBtn">Send to Email</button>
+        <a class="btn btn-secondary" href="index.html">Back to Events</a>
+      </footer>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+  (function(){
+    const CODE128B={32:[2,1,2,2,2,2],33:[2,2,2,1,2,2],34:[2,2,2,2,2,1],48:[1,2,3,1,2,2],49:[1,2,3,2,2,1],50:[2,2,3,2,1,1],95:[1,1,1,2,2,4],104:"STARTB",106:"STOP"};
+    function toCodes(text){const codes=[104];for(let i=0;i<text.length;i++){const c=text.charCodeAt(i);if(c<32||c>126)continue;codes.push(c)}let checksum=104;for(let i=1;i<codes.length;i++){checksum=(checksum+(codes[i]-32)*i)%103}codes.push((checksum%95)+32);codes.push(106);return codes}
+    function drawBarcode(id,text){const s=document.getElementById(id);if(!s)return;while(s.firstChild)s.removeChild(s.firstChild);const H=60,M=1.6;let x=0;function bar(w){const r=document.createElementNS("http://www.w3.org/2000/svg","rect");r.setAttribute("x",x);r.setAttribute("y",0);r.setAttribute("width",w);r.setAttribute("height",H);r.setAttribute("fill","#111");s.appendChild(r)}function patt(a){let b=true;for(const w of a){const wp=w*M;if(b)bar(wp);x+=wp;b=!b}}for(const code of toCodes(text)){if(code===104){patt([2,1,1,4,1,2]);continue}if(code===106){patt([2,3,3,1,1,1,2]);bar(M);break}const pw=CODE128B[code]||CODE128B[95];patt(pw)}s.setAttribute("width",x);s.setAttribute("height",H)}
+    window._miniBarcode={drawBarcode};
+  })();
+  </script>
+</body>
+</html>
